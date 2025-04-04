@@ -6,8 +6,6 @@ export async function POST(request: Request) {
   const clientId = process.env.PODIO_CLIENT_ID as string;
   const clientSecret = process.env.PODIO_CLIENT_SECRET as string;
 
-  console.log(clientId, clientSecret);
-
   const auth = await Podio.auth({
     client_id: clientId,
     client_secret: clientSecret,
