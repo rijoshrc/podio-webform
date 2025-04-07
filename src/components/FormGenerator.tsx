@@ -88,16 +88,6 @@ const getFieldValidation = (field: PodioField) => {
     case "image":
     case "file":
       return z.instanceof(File).optional();
-    // case "contact":
-    //   if (config.settings.multiple) {
-    //     return z.array(z.string());
-    //   }
-    //   return z.string();
-    // case "app":
-    //   if (config.settings.multiple) {
-    //     return z.array(z.string());
-    //   }
-    //   return z.string();
     case "embed":
       return z.string().url();
     case "phone":
@@ -137,7 +127,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "number": {
       const settings = config.settings as NumberSettings;
       return (
@@ -162,7 +151,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "money": {
       const settings = config.settings as MoneySettings;
       return (
@@ -212,7 +200,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "category": {
       const settings = config.settings as CategorySettings;
       const options = settings.options.filter((o) => o.status === "active");
@@ -364,7 +351,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "date":
       return (
         <FormField
@@ -381,7 +367,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
           )}
         />
       );
-
     case "duration": {
       const settings = config.settings as DurationSettings;
       return (
@@ -459,7 +444,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "image":
     case "file": {
       const settings = config.settings as FileSettings;
@@ -484,7 +468,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "contact": {
       const settings = config.settings as ContactSettings;
       return (
@@ -520,7 +503,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "app": {
       const settings = config.settings as AppSettings;
       return (
@@ -555,7 +537,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
         />
       );
     }
-
     case "embed":
       return (
         <FormField
@@ -572,7 +553,6 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
           )}
         />
       );
-
     case "phone":
       return (
         <FormField
@@ -598,14 +578,13 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
             <FormItem>
               <FormLabel>{label}</FormLabel>
               <FormControl>
-                <Input type="email" placeholder={`Enter email`} {...field} />
+                <Input type="email" placeholder="Enter email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
       );
-
     case "progress":
       return (
         <FormField
@@ -627,10 +606,8 @@ const FieldRenderer = ({ field, control }: FieldProps) => {
           )}
         />
       );
-
     case "calculation":
       return null;
-
     default:
       return (
         <div className="p-2 border rounded bg-red-50 text-red-700">
@@ -678,7 +655,10 @@ export default function FormGenerator({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((values) => {
+          console.log("Form Data:", values);
+          onSubmit(values);
+        })}
         className="p-6 space-y-6 border rounded-lg"
       >
         {visibleFields.map((field) => (
